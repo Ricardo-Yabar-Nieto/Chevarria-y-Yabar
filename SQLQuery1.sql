@@ -1,9 +1,10 @@
-CREATE TABLE ESTUDIANTES (
+CREATE TABLE ESTUDIANTES 
+(
     ID_ESTUDIANTE INT PRIMARY KEY,
     NOMBRE VARCHAR(100),
     APELLIDO VARCHAR(100),
     EMAIL VARCHAR(100) UNIQUE,
-    FECHA_NACIMIENTO DATE
+    FECHA_NACIMIENTO DATE,
 );
 
 CREATE TABLE CURSOS (
@@ -24,3 +25,22 @@ CREATE TABLE INSCRIPCIONES (
     CONSTRAINT FK_CURSO FOREIGN KEY (ID_CURSO) REFERENCES CURSOS(ID_CURSO)
 );
 
+-- Ejercicio 1: Añade una columna llamada DIRECCION de tipo VARCHAR2(200) a la tabla ESTUDIANTES.
+ALTER TABLE ESTUDIANTES
+ADD DIRECCION VARCHAR(200);
+
+-- Ejercicio 2: Cambia el tipo de datos de la columna DURACION a NUMBER(5, 1) para permitir duraciones con decimales.
+ALTER TABLE CURSOS
+ALTER COLUMN DURACION DECIMAL(5, 1);
+
+-- Ejercicio 3: Añade una restricción NOT NULL a la columna FECHA_INSCRIPCION para asegurar que todas las inscripciones tengan una fecha.
+ALTER TABLE INSCRIPCIONES
+ALTER COLUMN FECHA_INSCRIPCION DATE NOT NULL;
+
+-- Ejercicio 4: Añade una restricción UNIQUE a la columna NOMBRE_CURSO para asegurar que no haya cursos con el mismo nombre.
+ALTER TABLE CURSOS
+ADD CONSTRAINT UC_NOMBRE_CURSO UNIQUE (NOMBRE_CURSO);
+
+-- Ejercicio 5: Añade una restricción CHECK a la columna FECHA_NACIMIENTO para asegurar que los estudiantes tengan al menos 16 años (puedes usar ADD_MONTHS y SYSDATE).
+ALTER TABLE ESTUDIANTES
+ADD CONSTRAINT CHK_FECHA_NACIMIENTO CHECK (FECHA_NACIMIENTO <= '2009-03-31');
